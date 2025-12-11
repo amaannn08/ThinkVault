@@ -1,5 +1,5 @@
 import Router from "express";
-import commentModel from "../database/db.js";
+import commentModel from "../database/commentSchema.js";
 const commentRouter=Router();
 
 commentRouter.post("/comment",()=>{

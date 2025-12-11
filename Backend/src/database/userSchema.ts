@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./zod.js";
 
-const userSchema=new Schema <User>({
+const userSchema=new Schema({
     firstName:{
         type:String,
         required:[true,"First Name is Required"]
@@ -26,6 +25,6 @@ const userSchema=new Schema <User>({
     }
 })
 
-const userModel=mongoose.model<User>("user",userSchema);
+const userModel=mongoose.model("user",userSchema);
 
 export default userModel;

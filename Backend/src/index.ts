@@ -6,8 +6,8 @@ import dotenv from "dotenv"
 dotenv.config();
 const port = Number(process.env.PORT);
 const url = process.env.MONGODB_URL as string;
-
 const app=express();
+app.use(express.json());
 
 app.use("/auth",userRouter);
 

@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export const userZodSchema=z.object({
+export const userSignupZodSchema=z.object({
     firstName:z.string().min(1,"At Least 1 Character"),
     lastName:z.string().min(1,"At Least 1 Character").optional(),
     email: z.string().min(1, "Email is required").email(),
@@ -8,7 +8,20 @@ export const userZodSchema=z.object({
     userName:z.string().min(1,"At least 1 Character")
 });
 
-export type User=z.infer<typeof userZodSchema>;
+export type UserSignup=z.infer<typeof userSignupZodSchema>;
+
+export const userSigninZodSchema=z.object({
+    userName:z.string().min(1,"At least 1 Character"),
+    password:z.string().min(1,"Minimum 1 Chatacter")
+})
+
+export type UserSignin=z.infer<typeof userSigninZodSchema>;
+
+export const userSearchZodSchema=z.object({
+    userName:z.string().min(1,"At least 1 Character")
+})
+
+export type UserSearch=z.infer<typeof userSearchZodSchema>;
 
 export const postZodSchema=z.object({
     postTitle:z.string().min(10,"At Least 10 Character"),

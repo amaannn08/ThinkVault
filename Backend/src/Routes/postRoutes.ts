@@ -1,5 +1,5 @@
 import Router from "express";
-import postModel from "../database/db.js";
+import postModel from "../database/postSchema.js";
 const postRouter=Router();
 
 postRouter.post("/post",()=>{
