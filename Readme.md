@@ -1,61 +1,78 @@
-# ThinkVault
+# **TripTales**
+TripTales is a community-driven travel platform where people share real experiences, tips, itineraries, and stories.
+On top of that, an AI travel guide helps users explore destinations using **vector database search**, **RAG**, and data collected from public travel sources.
 
-ThinkVault is a modern “second brain” application built with the **MERN stack**, **TypeScript**, and **vector database embeddings**.  
-The goal is simple: help users store, search, and understand their knowledge effortlessly using AI-powered semantic search and automated insights.
+The idea is simple:
+**Authentic experiences from real people + an AI that actually understands travel.**
 
-## 🚀 Features
+---
 
-### 🔍 Semantic Vector Search  
-- Uses **OpenAI embeddings** with **Pinecone/Chroma**  
-- Enables high-dimensional similarity matching for smarter content retrieval  
-- Returns meaning-based results instead of keyword matches  
+## 🌍 What TripTales Offers
 
-### 🤖 AI-Powered Analysis  
-- Integrated **Google Gemini API**  
-- Automatically generates explanations, summaries, and insights  
-- Secure endpoints with **JWT authentication** and protected routes  
+### 📝 Community Travel Posts
 
-### 📤 Shareable Knowledge  
-- Share notes easily using **hashed URLs**  
-- Clean modal-based **CRUD operations** for creating, editing, and deleting content  
-- Organized dashboard built with **TailwindCSS**
+* Share experiences, photos, budgets, and itineraries
+* Upvote, comment, and follow destinations
+* Discover hidden gems through real travellers
 
-### ⚡ Smooth User Experience  
-- Real-time search suggestions as you type  
-- Drag-and-drop content management  
-- Fully responsive layout across devices  
+### 🔍 AI-Powered Travel Search (RAG)
+
+* Uses **OpenAI embeddings** + **Pinecone/Chroma**
+* Learns from scraped travel content + user posts
+* Returns meaning-based answers, not shallow keyword matches
+
+### 🤖 Personal AI Travel Guide
+
+* Built with **Gemini/OpenAI** through a dedicated RAG pipeline
+* Suggests itineraries, budgets, best seasons, food spots, and more
+* Context-aware responses grounded in your vector DB
+
+### 🧳 Smart Planning Tools
+
+* Auto-generated trip summaries
+* Suggested plans for different budgets
+* Tag-based filtering: solo, budget, trek, beach, adventure, etc.
+
+---
 
 ## 🛠️ Tech Stack
 
-**Frontend**  
-- React + TypeScript  
-- TailwindCSS  
-- Drag-and-drop utilities  
-- JWT-based client auth  
+**Frontend**
 
-**Backend**  
-- Node.js + Express  
-- MongoDB + Mongoose  
-- OpenAI Embeddings  
-- Pinecone / ChromaDB  
-- Google Gemini API  
-- Secure JWT auth & middleware  
+* React / Next.js (or your chosen stack)
+* TailwindCSS
+* JWT-based client auth
+* Responsive feed + chat UI
+
+**Backend**
+
+* Node.js + Express
+* MongoDB + Mongoose
+* Pinecone / ChromaDB for embeddings
+* AI integration with Gemini / OpenAI
+* Secure JWT auth and role-based routes
+
+---
 
 ## 📁 Project Structure
 
-ThinkVault/
+```
+TripTales/
 ├── backend/
 ├── frontend/
 ├── README.md
-├── package.json
-└── ...
+└── package.json
+```
 
-## 🚦 Getting Started
+---
 
-### 1. Clone the repository  
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
 ```bash
-git clone https://github.com/amaannn08/ThinkVault.git
-````
+git clone https://github.com/amaannn08/TripTales.git
+```
 
 ### 2. Install dependencies
 
@@ -63,17 +80,20 @@ git clone https://github.com/amaannn08/ThinkVault.git
 npm install
 ```
 
-### 3. Create a `.env` file
+### 3. Environment variables
+
+Create a `.env` file:
 
 ```
 PORT=3000
 MONGODB_URL=your_mongodb_uri
-OPENAI_API_KEY=your_key
-GEMINI_API_KEY=your_key
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
 JWT_SECRET=your_secret
+PINECONE_API_KEY=your_key
 ```
 
-### 4. Run the development server
+### 4. Run the dev server
 
 ```bash
 npm run dev
@@ -81,17 +101,18 @@ npm run dev
 
 ---
 
-## 📌 Roadmap
+## 🗺️ Roadmap
 
-* Notebook tags & categories
-* Multi-user workspace sharing
-* AI-generated mind maps
-* Offline local sync
-* Chrome extension for instant capture
+* Geo-tagged map view of all posts
+* AI itinerary builder with budget sliders
+* Traveler badges + reputation system
+* Marketplace for curated trips
+* Chrome extension for saving travel notes
+* Real-time chat with verified travel guides
 
 ---
 
 ## 🤝 Contributing
 
-Open to issues, feature requests, and pull requests.
-If you want to collaborate, just reach out!
+Ideas, issues, and PRs are welcome.
+If you want to collaborate or experiment with the RAG pipeline, just reach out.
