@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import userRouter from "./Routes/userRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 import dotenv from "dotenv"
 dotenv.config();
 const port = Number(process.env.PORT);
