@@ -1,10 +1,10 @@
 import { Request,Response,NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { startsWith } from "zod";
+import dotenv from "dotenv";
+dotenv.config();
 const JWT_SECRET=process.env.JWT_SECRET as string;
-
 async function auth(req:Request,res:Response,next:NextFunction){
-    const authHeader=req.headers.authorisation;
+    const authHeader=req.headers.authorization;
     if(!authHeader || typeof authHeader !== "string" ||!authHeader.startsWith("Bearer ")){
         return res.status(403).json({
             message:"Invalid Token"

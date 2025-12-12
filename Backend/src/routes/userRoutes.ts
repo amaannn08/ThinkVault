@@ -4,8 +4,11 @@ import { UserSignup, userSignupZodSchema ,userSigninZodSchema ,UserSignin, userS
 import bcrypt from "bcrypt";
 import auth from "../middlewares/auth.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv"
+dotenv.config();
 const userRouter=Router();
 
+const JWT_SECRET=process.env.JWT_SECRET as string;
 
 userRouter.post("/signup",async (req,res)=>{
     try {
@@ -62,14 +65,18 @@ userRouter.post("/signin",async (req,res)=>{
         const isMatch= await bcrypt.compare(password,user.password);
         if(!isMatch){
             return res.status(400).json({
-                message:"Invalid Username or Password"
+                message:"Invalid Password"
             })
         }
-
-        
-
+        const token=jwt.sign({
+            userId:user._id,userName:user.userName
+        },
+        JWT_SECRET,
+        {expiresIn:"24h"}
+        )
         return res.status(200).json({
-            message:"Signed In"
+            message:"Signed In",
+            token:token
         })
     } catch (error:any) {
         console.log("Signin Failed");
@@ -81,26 +88,35 @@ userRouter.post("/signin",async (req,res)=>{
 
 userRouter.get("/profile",auth,async (req,res)=>{
     try {
-        const result=userSearchZodSchema.safeParse(req.body);
-        if(!result.success){
+        const userId=req.user.userId;
+        console.log(userId);
+        const user=await userModel.findOne({_id: userId});
+        console.log(user);
+        if(!user){
             return res.json({
-                message:"Invalid Input"
+                message:"User Not Found"
             })
+        }else{
+            return res.json({
+                user:user
+            });
         }
-        const data:UserSearch=result.data;
-        const {userName}=data;
-        //He will be able to get the profile only if token is verified
     } catch (error) {
-        
+        console.log("Unable to fetch Profile of USER");
+        return res.status(500).json({
+            message:"Failed to Fetch profile"
+        })
     }
 });
 
-userRouter.put("/updateProfile",(req,res)=>{
-    
-})
+//create these routes later after MVP
 
-userRouter.get("/anotherUser",(req,res)=>{
+// userRouter.put("/updateProfile",(req,res)=>{
     
-})
+// })
+
+// userRouter.get("/anotherUser",(req,res)=>{
+    
+// })
 
 export default userRouter;
