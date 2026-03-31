@@ -7,10 +7,11 @@ def _make_async_url(url: str) -> tuple[str, dict]:
     """
     Normalize any postgres URL for asyncpg:
     - Convert scheme to postgresql+asyncpg://
-    - Strip ?sslmode= (asyncpg doesn't support it as a URL param)
-    - Return connect_args with ssl=True if sslmode was require/verify-*
+    - Strip ALL query params (NeonDB uses sslmode, channel_binding, etc.
+      which are libpq-only and not accepted by asyncpg)
+    - Return connect_args with ssl=True if any SSL param was present
     """
-    from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+    from urllib.parse import urlparse, parse_qs, urlunparse
 
     for old, new in [
         ("postgresql+psycopg2://", "postgresql+asyncpg://"),
@@ -21,17 +22,21 @@ def _make_async_url(url: str) -> tuple[str, dict]:
             url = url.replace(old, new, 1)
             break
 
-    connect_args: dict = {}
-    if "sslmode=" in url:
-        parsed = urlparse(url)
-        params = parse_qs(parsed.query, keep_blank_values=True)
-        ssl_mode = params.pop("sslmode", [None])[0]
-        if ssl_mode and ssl_mode not in ("disable", "allow"):
-            connect_args["ssl"] = True
-        new_query = urlencode({k: v[0] for k, v in params.items()})
-        url = urlunparse(parsed._replace(query=new_query))
+    parsed = urlparse(url)
+    params = parse_qs(parsed.query, keep_blank_values=True)
 
-    return url, connect_args
+    # Detect if SSL is needed (sslmode=require/verify-*)
+    ssl_mode = params.get("sslmode", [None])[0]
+    needs_ssl = ssl_mode not in (None, "disable", "allow", "prefer")
+
+    # Strip ALL query params — asyncpg does not accept libpq connection params
+    clean_url = urlunparse(parsed._replace(query=""))
+
+    connect_args: dict = {}
+    if needs_ssl:
+        connect_args["ssl"] = True
+
+    return clean_url, connect_args
 
 
 _async_url, _connect_args = _make_async_url(settings.DATABASE_URL)
