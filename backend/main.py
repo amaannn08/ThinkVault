@@ -30,9 +30,15 @@ app = FastAPI(
 )
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
+_cors_origins = list(settings.CORS_ORIGINS)
+# Always allow common local dev origins
+for _local in ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"]:
+    if _local not in _cors_origins:
+        _cors_origins.append(_local)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
